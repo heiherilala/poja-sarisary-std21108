@@ -2,7 +2,6 @@ package hei.school.sarisary.endpoint.rest.controller;
 
 import hei.school.sarisary.model.PicturesUTL;
 import hei.school.sarisary.service.PictureService;
-import java.io.IOException;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,13 +16,20 @@ public class ImageController {
 
   @PutMapping(value = "/black-and-white/{id}")
   public PicturesUTL getBlackAndWhiteImage(
-      @PathVariable(name = "id") String id, @RequestBody(required = false) byte[] file)
-      throws IOException {
-    return service.uploadAndConvertImageToBlackAndWhite(id, file);
+      @PathVariable(name = "id") String id, @RequestBody(required = false) byte[] file) {
+    try {
+      return service.uploadAndConvertImageToBlackAndWhite(id, file);
+    } catch (Exception e) {
+      return null;
+    }
   }
 
   @GetMapping(value = "/black-and-white/{id}")
   public PicturesUTL getImageURL(@PathVariable(name = "id") String id) {
-    return service.getPicturesURL(id);
+    try {
+      return service.getPicturesURL(id);
+    } catch (Exception e) {
+      return null;
+    }
   }
 }
